@@ -16,13 +16,13 @@
  */
 package com.sxzhongf.extension.dubbo.common.logger;
 
-import org.apache.dubbo.common.extension.ExtensionLoader;
-import org.apache.dubbo.common.logger.jcl.JclLoggerAdapter;
-import org.apache.dubbo.common.logger.jdk.JdkLoggerAdapter;
-import org.apache.dubbo.common.logger.log4j.Log4jLoggerAdapter;
-import org.apache.dubbo.common.logger.log4j2.Log4j2LoggerAdapter;
-import org.apache.dubbo.common.logger.slf4j.Slf4jLoggerAdapter;
-import org.apache.dubbo.common.logger.support.FailsafeLogger;
+import com.sxzhongf.extension.dubbo.common.extension.ExtensionLoader;
+import com.sxzhongf.extension.dubbo.common.logger.jcl.JclLoggerAdapter;
+import com.sxzhongf.extension.dubbo.common.logger.jdk.JdkLoggerAdapter;
+import com.sxzhongf.extension.dubbo.common.logger.log4j.Log4jLoggerAdapter;
+import com.sxzhongf.extension.dubbo.common.logger.log4j2.Log4j2LoggerAdapter;
+import com.sxzhongf.extension.dubbo.common.logger.slf4j.Slf4jLoggerAdapter;
+import com.sxzhongf.extension.dubbo.common.logger.support.FailsafeLogger;
 
 import java.io.File;
 import java.util.Map;

@@ -16,9 +16,9 @@
  */
 package com.sxzhongf.extension.dubbo.common.logger.log4j;
 
-import org.apache.dubbo.common.logger.Level;
-import org.apache.dubbo.common.logger.Logger;
-import org.apache.dubbo.common.logger.LoggerAdapter;
+import com.sxzhongf.extension.dubbo.common.logger.Level;
+import com.sxzhongf.extension.dubbo.common.logger.Logger;
+import com.sxzhongf.extension.dubbo.common.logger.LoggerAdapter;
 import org.apache.log4j.Appender;
 import org.apache.log4j.FileAppender;
 import org.apache.log4j.LogManager;

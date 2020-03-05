@@ -16,7 +16,8 @@
  */
 package com.sxzhongf.extension.dubbo.common.logger.jdk;
 
-import org.apache.dubbo.common.logger.Logger;
+
+import com.sxzhongf.extension.dubbo.common.logger.Logger;
 
 import java.util.logging.Level;
 

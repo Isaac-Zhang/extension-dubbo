@@ -17,8 +17,7 @@
 package com.sxzhongf.extension.dubbo.common.logger.jcl;
 
 import org.apache.commons.logging.Log;
-import org.apache.dubbo.common.logger.Logger;
-
+import com.sxzhongf.extension.dubbo.common.logger.Logger;
 import java.io.Serializable;
 
 /**
