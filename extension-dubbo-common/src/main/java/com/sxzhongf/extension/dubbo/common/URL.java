@@ -31,6 +31,9 @@ import java.net.URLEncoder;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
+import static com.sxzhongf.extension.dubbo.common.constants.CommonConstants.*;
+import static com.sxzhongf.extension.dubbo.common.constants.RemotingConstants.BACKUP_KEY;
+
 /**
  * URL - Uniform Resource Locator (Immutable, ThreadSafe)
  * <p>
@@ -405,7 +408,7 @@ public /**final**/ class URL implements Serializable {
 
     public String getBackupAddress(int defaultPort) {
         StringBuilder address = new StringBuilder(appendDefaultPort(getAddress(), defaultPort));
-        String[] backups = getParameter(Constants.BACKUP_KEY, new String[0]);
+        String[] backups = getParameter(BACKUP_KEY, new String[0]);
         if (backups != null && backups.length > 0) {
             for (String backup : backups) {
                 address.append(",");
@@ -418,7 +421,7 @@ public /**final**/ class URL implements Serializable {
     public List<URL> getBackupUrls() {
         List<URL> urls = new ArrayList<URL>();
         urls.add(this);
-        String[] backups = getParameter(Constants.BACKUP_KEY, new String[0]);
+        String[] backups = getParameter(BACKUP_KEY, new String[0]);
         if (backups != null && backups.length > 0) {
             for (String backup : backups) {
                 urls.add(this.setAddress(backup));
@@ -470,7 +473,7 @@ public /**final**/ class URL implements Serializable {
     public String getParameter(String key) {
         String value = parameters.get(key);
         if (value == null || value.length() == 0) {
-            value = parameters.get(Constants.DEFAULT_KEY_PREFIX + key);
+            value = parameters.get(DEFAULT_KEY_PREFIX + key);
         }
         return value;
     }
@@ -488,7 +491,7 @@ public /**final**/ class URL implements Serializable {
         if (value == null || value.length() == 0) {
             return defaultValue;
         }
-        return Constants.COMMA_SPLIT_PATTERN.split(value);
+        return COMMA_SPLIT_PATTERN.split(value);
     }
 
     private Map<String, Number> getNumbers() {
@@ -910,11 +913,11 @@ public /**final**/ class URL implements Serializable {
     }
 
     public boolean isLocalHost() {
-        return NetUtils.isLocalHost(host) || getParameter(Constants.LOCALHOST_KEY, false);
+        return NetUtils.isLocalHost(host) || getParameter(LOCALHOST_KEY, false);
     }
 
     public boolean isAnyHost() {
-        return Constants.ANYHOST_VALUE.equals(host) || getParameter(Constants.ANYHOST_KEY, false);
+        return ANYHOST_VALUE.equals(host) || getParameter(ANYHOST_KEY, false);
     }
 
     public URL addParameterAndEncoded(String key, String value) {
@@ -1295,12 +1298,12 @@ public /**final**/ class URL implements Serializable {
             return null;
         }
         StringBuilder buf = new StringBuilder();
-        String group = getParameter(Constants.GROUP_KEY);
+        String group = getParameter(GROUP_KEY);
         if (group != null && group.length() > 0) {
             buf.append(group).append("/");
         }
         buf.append(inf);
-        String version = getParameter(Constants.VERSION_KEY);
+        String version = getParameter(VERSION_KEY);
         if (version != null && version.length() > 0) {
             buf.append(":").append(version);
         }
@@ -1321,11 +1324,11 @@ public /**final**/ class URL implements Serializable {
     }
 
     public String getServiceInterface() {
-        return getParameter(Constants.INTERFACE_KEY, path);
+        return getParameter(INTERFACE_KEY, path);
     }
 
     public URL setServiceInterface(String service) {
-        return addParameter(Constants.INTERFACE_KEY, service);
+        return addParameter(INTERFACE_KEY, service);
     }
 
     /**

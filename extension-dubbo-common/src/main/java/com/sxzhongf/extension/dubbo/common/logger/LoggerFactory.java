@@ -16,7 +16,7 @@
  */
 package com.sxzhongf.extension.dubbo.common.logger;
 
-import com.sxzhongf.extension.dubbo.common.extension.ExtensionLoader;
+import com.sxzhongf.extension.dubbo.common.extension.ExtensionServiceLoader;
 import com.sxzhongf.extension.dubbo.common.logger.jcl.JclLoggerAdapter;
 import com.sxzhongf.extension.dubbo.common.logger.jdk.JdkLoggerAdapter;
 import com.sxzhongf.extension.dubbo.common.logger.log4j.Log4jLoggerAdapter;
@@ -76,7 +76,7 @@ public class LoggerFactory {
 
     public static void setLoggerAdapter(String loggerAdapter) {
         if (loggerAdapter != null && loggerAdapter.length() > 0) {
-            setLoggerAdapter(ExtensionLoader.getExtensionLoader(LoggerAdapter.class).getExtension(loggerAdapter));
+            setLoggerAdapter(ExtensionServiceLoader.getExtensionServiceLoader(LoggerAdapter.class).getExtension(loggerAdapter));
         }
     }
 

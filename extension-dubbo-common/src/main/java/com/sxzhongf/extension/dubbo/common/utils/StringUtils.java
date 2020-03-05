@@ -19,13 +19,14 @@ package com.sxzhongf.extension.dubbo.common.utils;
 import com.alibaba.fastjson.JSON;
 import com.sxzhongf.extension.dubbo.common.logger.Logger;
 import com.sxzhongf.extension.dubbo.common.logger.LoggerFactory;
-import com.sxzhongf.extension.dubbo.common.Constants;
 import com.sxzhongf.extension.dubbo.common.io.UnsafeStringWriter;
 
 import java.io.PrintWriter;
 import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import static com.sxzhongf.extension.dubbo.common.constants.CommonConstants.*;
 
 /**
  * StringUtils
@@ -453,7 +454,7 @@ public final class StringUtils {
     }
 
     public static boolean isContains(String values, String value) {
-        return isNotEmpty(values) && isContains(Constants.COMMA_SPLIT_PATTERN.split(values), value);
+        return isNotEmpty(values) && isContains(COMMA_SPLIT_PATTERN.split(values), value);
     }
 
     /**
@@ -700,12 +701,12 @@ public final class StringUtils {
 
     public static String getServiceKey(Map<String, String> ps) {
         StringBuilder buf = new StringBuilder();
-        String group = ps.get(Constants.GROUP_KEY);
+        String group = ps.get(GROUP_KEY);
         if (isNotEmpty(group)) {
             buf.append(group).append("/");
         }
-        buf.append(ps.get(Constants.INTERFACE_KEY));
-        String version = ps.get(Constants.VERSION_KEY);
+        buf.append(ps.get(INTERFACE_KEY));
+        String version = ps.get(VERSION_KEY);
         if (isNotEmpty(group)) {
             buf.append(":").append(version);
         }
@@ -760,7 +761,7 @@ public final class StringUtils {
         StringBuilder buf = new StringBuilder();
         for (Object arg : args) {
             if (buf.length() > 0) {
-                buf.append(Constants.COMMA_SEPARATOR);
+                buf.append(COMMA_SEPARATOR);
             }
             if (arg == null || ReflectUtils.isPrimitives(arg.getClass())) {
                 buf.append(arg);
