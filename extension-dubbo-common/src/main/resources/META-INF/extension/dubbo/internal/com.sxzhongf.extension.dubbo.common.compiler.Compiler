@@ -1,0 +1,3 @@
+adaptive=com.sxzhongf.extension.dubbo.common.compiler.AdaptiveCompiler
+jdk=com.sxzhongf.extension.dubbo.common.compiler.JdkCompiler
+javassist=com.sxzhongf.extension.dubbo.common.compiler.JavassistCompiler
