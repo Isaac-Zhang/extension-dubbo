@@ -1,0 +1,2 @@
+adaptive=com.sxzhongf.extension.dubbo.common.extension.factory.AdaptiveExtensionServiceFactory
+spi=com.sxzhongf.extension.dubbo.common.extension.factory.SpiExtensionServiceFactory

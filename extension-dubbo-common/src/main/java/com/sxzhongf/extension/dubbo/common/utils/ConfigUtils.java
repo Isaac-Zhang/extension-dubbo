@@ -18,7 +18,7 @@ import java.util.regex.Pattern;
 import static com.sxzhongf.extension.dubbo.common.constants.CommonConstants.*;
 
 /**
- * ConfigUtils for TODO
+ * ConfigUtils
  *
  * @author <a href="mailto:magicianisaac@gmail.com">Isaac.Zhang | 若初</a>
  * @since 2020/3/5

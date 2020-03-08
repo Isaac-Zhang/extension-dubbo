@@ -30,7 +30,7 @@ import java.lang.annotation.*;
  * instead of reporting which extract extension implementation fails and the extract reason.
  * </p>
  *
- * @deprecated because it's too general, switch to use {@link org.apache.dubbo.common.extension.SPI}
+ * @deprecated because it's too general, switch to use {@link com.sxzhongf.extension.dubbo.common.extension.SPI}
  */
 @Deprecated
 @Documented

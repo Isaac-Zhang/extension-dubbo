@@ -9,7 +9,7 @@ import java.util.Arrays;
 import java.util.Comparator;
 
 /**
- * ActivateComparator for TODO
+ * ActivateComparator
  *
  * @author <a href="mailto:magicianisaac@gmail.com">Isaac.Zhang | 若初</a>
  * @since 2020/3/5

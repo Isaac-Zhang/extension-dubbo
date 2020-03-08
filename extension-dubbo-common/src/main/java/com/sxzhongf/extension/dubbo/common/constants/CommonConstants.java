@@ -4,7 +4,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.regex.Pattern;
 
 /**
- * CommonConstants for TODO
+ * Common Constants
  *
  * @author <a href="mailto:magicianisaac@gmail.com">Isaac.Zhang | 若初</a>
  * @since 2020/3/5
