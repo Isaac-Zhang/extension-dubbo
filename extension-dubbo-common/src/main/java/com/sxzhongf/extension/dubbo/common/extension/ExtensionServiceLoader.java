@@ -221,7 +221,7 @@ public class ExtensionServiceLoader<T> {
 
     /**
      * cached the extension classes from META-INF resources
-     *
+     * 这个方法用于获取某个接口的所有实现类。比如该方法可以获取 Protocol 接口的 DubboProtocol、HttpProtocol、InjvmProtocol 等实现类。
      * @return
      */
     private Map<String, Class<?>> getExtensionClasses() {
@@ -472,21 +472,37 @@ public class ExtensionServiceLoader<T> {
         }
     }
 
+    /**
+     * 1. 调用 getExtensionClasses 获取所有的拓展类
+     * 2. 检查缓存，若缓存不为空，则返回缓存
+     * 3. 若缓存为空，则调用 createAdaptiveExtensionClass 创建自适应拓展类
+     * @return
+     */
     private Class<?> getAdaptiveExtensionClass() {
+        // 通过 SPI 获取所有的拓展类
         getExtensionClasses();
         if (cachedAdaptiveClass != null) {
             return cachedAdaptiveClass;
         }
+        // 创建自适应拓展类
         return cachedAdaptiveClass = createAdaptiveExtensionClass();
     }
 
+    /**
+     * 创建自适应拓展类
+     *
+     * @return
+     */
     private Class<?> createAdaptiveExtensionClass() {
+        //构建自适应拓展代码
         String code = new AdaptiveClassCodeGenerator(type, cachedDefaultName).generate();
         ClassLoader classLoader = findClassLoader();
+        // 获取编译器实现类
         com.sxzhongf.extension.dubbo.common.compiler.Compiler compiler =
                 ExtensionServiceLoader.getExtensionServiceLoader
                         (com.sxzhongf.extension.dubbo.common.compiler.Compiler.class)
                         .getAdaptiveExtension();
+        // 编译代码，生成 Class
         return compiler.compile(code, classLoader);
     }
 

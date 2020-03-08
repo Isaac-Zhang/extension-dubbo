@@ -21,7 +21,8 @@ public class AdaptiveClassCodeGenerator {
 
     private static final Logger logger = LoggerFactory.getLogger(AdaptiveClassCodeGenerator.class);
 
-    private static final String CLASSNAME_INVOCATION = "org.apache.dubbo.rpc.Invocation";
+    //FIXME: Isaac changed the classname from 'org.apache.dubbo.rpc.Invocation'
+    private static final String CLASSNAME_INVOCATION = "com.sxzhongf.extension.dubbo.rpc.Invocation";
 
     private static final String CODE_PACKAGE = "package %s;\n";
 
