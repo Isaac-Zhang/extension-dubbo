@@ -463,6 +463,18 @@ public class ExtensionServiceLoader<T> {
         return Collections.unmodifiableSet(new TreeSet<>(clazzes.keySet()));
     }
 
+
+    public Set<T> getSupportedExtensionInstances() {
+        Set<T> instances = new HashSet<>();
+        Set<String> supportedExtensions = getSupportedExtensions();
+        if (CollectionUtils.isNotEmpty(supportedExtensions)) {
+            for (String name : supportedExtensions) {
+                instances.add(getExtension(name));
+            }
+        }
+        return instances;
+    }
+
     @SuppressWarnings("unchecked")
     private T createAdaptiveExtension() {
         try {
@@ -763,6 +775,19 @@ public class ExtensionServiceLoader<T> {
             exts.addAll(usrs);
         }
         return exts;
+    }
+
+    /**
+     * Get the extension by specified name if found, or {@link #getDefaultExtension() returns the default one}
+     *
+     * @param name the name of extension
+     * @return non-null
+     */
+    public T getOrDefaultExtension(String name) {
+        return containsExtension(name)  ? getExtension(name) : getDefaultExtension();
+    }
+    private boolean containsExtension(String name) {
+        return getExtensionClasses().containsKey(name);
     }
 
     private boolean isMatchGroup(String group, String[] groups) {

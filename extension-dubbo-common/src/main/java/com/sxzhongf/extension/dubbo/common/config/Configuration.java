@@ -16,6 +16,8 @@
  */
 package com.sxzhongf.extension.dubbo.common.config;
 
+import java.util.NoSuchElementException;
+
 /**
  * Configuration interface, to fetch the value for the specified key.
  */
@@ -26,7 +28,9 @@ public interface Configuration {
      * @param key The configuration key.
      * @return The associated string.
      */
-    String getString(String key);
+    default String getString(String key) {
+        return convert(String.class, key, null);
+    }
 
     /**
      * Get a string associated with the given configuration key.
@@ -38,7 +42,52 @@ public interface Configuration {
      * @return The associated string if key is found and has valid
      * format, default value otherwise.
      */
-    String getString(String key, String defaultValue);
+    default String getString(String key, String defaultValue) {
+        return convert(String.class, key, defaultValue);
+    }
+
+    default int getInt(String key) {
+        Integer i = this.getInteger(key, (Integer) null);
+        if (i != null) {
+            return i;
+        } else {
+            throw new NoSuchElementException('\'' + key + "' doesn't map to an existing object");
+        }
+    }
+
+    default int getInt(String key, int defaultValue) {
+        Integer i = this.getInteger(key, (Integer) null);
+        return i == null ? defaultValue : i;
+    }
+
+    default Integer getInteger(String key, Integer defaultValue) {
+        try {
+            return convert(Integer.class, key, defaultValue);
+        } catch (NumberFormatException e) {
+            throw new IllegalStateException('\'' + key + "' doesn't map to a Integer object", e);
+        }
+    }
+
+    default boolean getBoolean(String key) {
+        Boolean b = this.getBoolean(key, null);
+        if (b != null) {
+            return b;
+        } else {
+            throw new NoSuchElementException('\'' + key + "' doesn't map to an existing object");
+        }
+    }
+
+    default boolean getBoolean(String key, boolean defaultValue) {
+        return this.getBoolean(key, toBooleanObject(defaultValue));
+    }
+
+    default Boolean getBoolean(String key, Boolean defaultValue) {
+        try {
+            return convert(Boolean.class, key, defaultValue);
+        } catch (Exception e) {
+            throw new IllegalStateException("Try to get " + '\'' + key + "' failed, maybe because this key doesn't map to a Boolean object", e);
+        }
+    }
 
     /**
      * Gets a property from the configuration. This is the most basic get
@@ -56,7 +105,9 @@ public interface Configuration {
      * @return the value to which this configuration maps the specified key, or
      * null if the configuration contains no mapping for this key.
      */
-    Object getProperty(String key);
+    default Object getProperty(String key) {
+        return getProperty(key, null);
+    }
 
     /**
      * Gets a property from the configuration. The default value will return if the configuration doesn't contain
@@ -67,7 +118,12 @@ public interface Configuration {
      * @return the value to which this configuration maps the specified key, or default value if the configuration
      * contains no mapping for this key.
      */
-    Object getProperty(String key, Object defaultValue);
+    default Object getProperty(String key, Object defaultValue) {
+        Object value = getInternalProperty(key);
+        return value != null ? value : defaultValue;
+    }
+
+    Object getInternalProperty(String key);
 
     /**
      * Check if the configuration contains the specified key.
@@ -76,7 +132,48 @@ public interface Configuration {
      * @return {@code true} if the configuration contains a value for this
      * key, {@code false} otherwise
      */
-    boolean containsKey(String key);
+    default boolean containsKey(String key) {
+        return getProperty(key) != null;
+    }
 
 
+    default <T> T convert(Class<T> cls, String key, T defaultValue) {
+        // we only process String properties for now
+        String value = (String) getProperty(key);
+
+        if (value == null) {
+            return defaultValue;
+        }
+
+        Object obj = value;
+        if (cls.isInstance(value)) {
+            return cls.cast(value);
+        }
+
+        if (Boolean.class.equals(cls) || Boolean.TYPE.equals(cls)) {
+            obj = Boolean.valueOf(value);
+        } else if (Number.class.isAssignableFrom(cls) || cls.isPrimitive()) {
+            if (Integer.class.equals(cls) || Integer.TYPE.equals(cls)) {
+                obj = Integer.valueOf(value);
+            } else if (Long.class.equals(cls) || Long.TYPE.equals(cls)) {
+                obj = Long.valueOf(value);
+            } else if (Byte.class.equals(cls) || Byte.TYPE.equals(cls)) {
+                obj = Byte.valueOf(value);
+            } else if (Short.class.equals(cls) || Short.TYPE.equals(cls)) {
+                obj = Short.valueOf(value);
+            } else if (Float.class.equals(cls) || Float.TYPE.equals(cls)) {
+                obj = Float.valueOf(value);
+            } else if (Double.class.equals(cls) || Double.TYPE.equals(cls)) {
+                obj = Double.valueOf(value);
+            }
+        } else if (cls.isEnum()) {
+            obj = Enum.valueOf(cls.asSubclass(Enum.class), value);
+        }
+
+        return cls.cast(obj);
+    }
+
+    static Boolean toBooleanObject(boolean bool) {
+        return bool ? Boolean.TRUE : Boolean.FALSE;
+    }
 }

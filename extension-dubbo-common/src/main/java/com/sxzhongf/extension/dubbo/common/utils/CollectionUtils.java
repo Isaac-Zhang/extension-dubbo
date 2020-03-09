@@ -18,6 +18,10 @@ package com.sxzhongf.extension.dubbo.common.utils;
 
 import java.util.*;
 
+import static java.util.Arrays.asList;
+import static java.util.Collections.emptySet;
+import static java.util.Collections.unmodifiableSet;
+
 public class CollectionUtils {
 
     private static final Comparator<String> SIMPLE_NAME_COMPARATOR = new Comparator<String>() {
@@ -49,7 +53,7 @@ public class CollectionUtils {
 
     @SuppressWarnings({"unchecked", "rawtypes"})
     public static <T> List<T> sort(List<T> list) {
-        if (list != null && !list.isEmpty()) {
+        if (isNotEmpty(list)) {
             Collections.sort((List) list);
         }
         return list;
@@ -114,7 +118,7 @@ public class CollectionUtils {
         for (Map.Entry<String, String> entry : map.entrySet()) {
             String key = entry.getKey();
             String value = entry.getValue();
-            if (value == null || value.length() == 0) {
+            if (StringUtils.isEmpty(value)) {
                 list.add(key);
             } else {
                 list.add(key + separator + value);
@@ -167,6 +171,10 @@ public class CollectionUtils {
 
     public static Map<String, String> toStringMap(String... pairs) {
         Map<String, String> parameters = new HashMap<>();
+        if (ArrayUtils.isEmpty(pairs)) {
+            return parameters;
+        }
+
         if (pairs.length > 0) {
             if (pairs.length % 2 != 0) {
                 throw new IllegalArgumentException("pairs must be even.");
@@ -200,7 +208,28 @@ public class CollectionUtils {
     }
 
     public static boolean isNotEmpty(Collection<?> collection) {
-        return collection != null && !collection.isEmpty();
+        return !isEmpty(collection);
     }
 
+    public static boolean isEmptyMap(Map map) {
+        return map == null || map.size() == 0;
+    }
+
+    public static boolean isNotEmptyMap(Map map) {
+        return !isEmptyMap(map);
+    }
+
+    /**
+     * Convert to multiple values to be {@link LinkedHashSet}
+     *
+     * @param values one or more values
+     * @param <T>    the type of <code>values</code>
+     * @return read-only {@link Set}
+     */
+    public static <T> Set<T> ofSet(T... values) {
+        if (values == null || values.length < 1) {
+            return emptySet();
+        }
+        return unmodifiableSet(new LinkedHashSet<>(asList(values)));
+    }
 }

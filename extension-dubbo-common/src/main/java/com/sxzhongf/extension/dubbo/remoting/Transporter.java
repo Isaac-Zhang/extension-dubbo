@@ -5,7 +5,7 @@ import com.sxzhongf.extension.dubbo.common.extension.Adaptive;
 import com.sxzhongf.extension.dubbo.common.extension.SPI;
 
 /**
- * Transporter for TODO
+ * Transporter
  *
  * @author <a href="mailto:magicianisaac@gmail.com">Isaac.Zhang | 若初</a>
  * @since 2020/3/8
