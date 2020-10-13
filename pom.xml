@@ -43,7 +43,7 @@
 
     <properties>
         <!-- Test libs -->
-        <junit_version>4.12</junit_version>
+        <junit_version>4.13.1</junit_version>
         <mockito_version>2.18.3</mockito_version>
         <!-- Build args -->
         <argline>-server -Xms256m -Xmx512m -XX:PermSize=64m -XX:MaxPermSize=128m -Dfile.encoding=UTF-8
